@@ -18,9 +18,11 @@ do not introduce distortion to objects like buildings.
 ### Model
   In the initial clustering phase of my project, I employed Deep Clustering, an unsupervised clustering method developed by the Facebook AI Research Team. The method consists of three key components: training the encoder, generating initial labels through means clustering, and performing deep clustering. For this part, I utilized the Keras API.
 
-![img/u-net-architecture.png](img/u-net-architecture.png)
+![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
 
-  In the second part of my project, I used a VGG image annotator and extracted some labels myself. Just I use good clustered arable land images. I extract some image annotations and get an annotation JSON file. After that, I use a Python script and save the mask as a png. Seemask_extractor.py for detail.
+  In the second part of my project, I used a VGG image annotator and extracted some labels myself. Just I use good clustered arable land images. I extract some image annotations and get an annotation JSON file. After that, I use a Python script and save the mask as a png. See mask_extractor.py for detail.
+  
+![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
 file.
 <details>
   <summary>
