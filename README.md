@@ -2,13 +2,11 @@
 Suitable Agriculture Land Detection from Satellite Imaginary with Deep Clustering
 
 ## Overview
+My project has two main parts, land detection with an unsupervised learning model and semantic segmentation for arable land using the supervised learning method. Firstly, I used the deep clustering method. Secondly, I extracted annotations from clustered images own, and train the U-Net model for semantic segmentation. 
+In the end, we can show segmented arable land from satellite images.
 
-### Data
+### Data and Augmentation
 The original dataset is from Sentinel-2 datasets, and I've downloaded it and done the pre-processing.
-
-See U-Net-semantic-segmentation.ipyn for detail.
-
-### Data augmentation
 
 The data for training contains 202 256x256x3 images, which are far not enough to feed a deep-learning neural network. I use a module called ImageDataGenerator in keras.preprocessing.image to do data augmentation.
 In the pre-processing part of the dataset, I used data augmentation to combat overfitting. 
@@ -17,10 +15,10 @@ These transformations leverage the fact that these different special visualizati
 Due to the nature of satellite imagery only cropping, rotations, reflections, and scaling were used for data augmentation because they
 do not introduce distortion to objects like buildings.
 
-See U-Net-semantic-segmentation.ipyn for detail.
-
 ### Model
   In the initial clustering phase of my project, I employed Deep Clustering, an unsupervised clustering method developed by the Facebook AI Research Team. The method consists of three key components: training the encoder, generating initial labels through means clustering, and performing deep clustering. For this part, I utilized the Keras API.
+
+![img/u-net-architecture.png](img/u-net-architecture.png)
 
   In the second part of my project, I used a VGG image annotator and extracted some labels myself. Just I use good clustered arable land images. I extract some image annotations and get an annotation JSON file. After that, I use a Python script and save the mask as a png. Seemask_extractor.py for detail.
 file.
