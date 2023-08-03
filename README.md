@@ -8,6 +8,10 @@ In the end, we can show segmented arable land from satellite images.
 ### Data and Augmentation
 The original dataset is from Sentinel-2 datasets, and I've downloaded it and done the pre-processing.
 
+  ![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
+  ![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
+  ![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
+
 The data for training contains 202 256x256x3 images, which are far not enough to feed a deep-learning neural network. I use a module called ImageDataGenerator in keras.preprocessing.image to do data augmentation.
 In the pre-processing part of the dataset, I used data augmentation to combat overfitting. 
 Satellite images are loaded by applying random horizontal and vertical flips, and a random rotation. 
@@ -18,12 +22,7 @@ do not introduce distortion to objects like buildings.
 ### Model
   In the initial clustering phase of my project, I employed Deep Clustering, an unsupervised clustering method developed by the Facebook AI Research Team. The method consists of three key components: training the encoder, generating initial labels through means clustering, and performing deep clustering. For this part, I utilized the Keras API.
 
-![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
-
-  In the second part of my project, I used a VGG image annotator and extracted some labels myself. Just I use good clustered arable land images. I extract some image annotations and get an annotation JSON file. After that, I use a Python script and save the mask as a png. See mask_extractor.py for detail.
-  
-![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
-file.
+  The second phase of my project involves training the U-Net model for semantic segmentation. I used a VGG image annotator and extracted some labels myself. Just I use good clustered arable land images. I extract some image annotations and get an annotation JSON file. After that, I use a Python script and save the mask as a png. See mask_extractor.py for detail.
 <details>
   <summary>
     Deep Clustering
@@ -39,7 +38,7 @@ file.
   - By training the autoencoder, we have its encoder part learned to compress each image into ten floating point values.
   - I am going to use K-Means to generate the cluster centroids, which are the 100 clusters’ centers in the 100-D feature space.
   - We are also going to build our custom clustering layer to convert input features to cluster label probability. The probability is calculated by t-distribution.
-  -   
+  ![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
 </details>
 <details>
   <summary>
@@ -50,7 +49,7 @@ file.
   - I have limited available segmentation masks for training. For this reason, I use transfer learning and augmentation 15 times for all images.
   - I train my model using pre-trained InceptionV3 and ResNet50 which are trained with the imagenet.
   - Integrated the resnet50 and Inception V3 pre-trained models to U-Net.
-  ![img/u-net-architecture.png](img/u-net-architecture.png)
+  <img src="img/u-net-architecture.png" alt="Image" style="width: 750px; height: auto;">
 
   This deep neural network is implemented with Keras functional API, which makes it extremely easy to experiment with different interesting architectures.
   
@@ -107,12 +106,12 @@ You will see the predicted results of test image in data/membrane/test
 
 ### Results
 
-Use the trained model to do segmentation on test images, the result is statisfactory.
+#### Deep Clustering results
+![img/dc_output_1.png](img/dc_output_1.png)
+![img/dc_output_2.png](img/dc_output_2.png)
 
-![img/0test.png](img/0test.png)
-
-![img/0label.png](img/0label.png)
-
+#### Semantic Segmentation results
+![img/output.png](img/output.png)
 
 ## About Keras
 
