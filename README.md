@@ -2,15 +2,15 @@
 Suitable Agriculture Land Detection from Satellite Imaginary with Deep Clustering
 
 ## Overview
-My project has two main parts, land detection with an unsupervised learning model and semantic segmentation for arable land using the supervised learning method. Firstly, I used the deep clustering method. Secondly, I extracted annotations from clustered images own, and train the U-Net model for semantic segmentation. 
+The project has two main parts, land detection with an unsupervised learning model and semantic segmentation for arable land using the supervised learning method. Firstly, I used the deep clustering method. Secondly, I extracted annotations from clustered images own, and train the U-Net model for semantic segmentation. 
 In the end, we can show segmented arable land from satellite images.
 
 ### Data and Augmentation
 The original dataset is from Sentinel-2 datasets, and I've downloaded it and done the pre-processing.
 
-  ![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
-  ![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
-  ![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
+![data/ex_data_1.jpg](data/ex_data_1.jpg)
+![data/ex_data_3.jpg](data/ex_data_2.jpg)
+![data/ex_data_2.jpg](data/ex_data_3.jpg)
 
 The data for training contains 202 256x256x3 images, which are far not enough to feed a deep-learning neural network. I use a module called ImageDataGenerator in keras.preprocessing.image to do data augmentation.
 In the pre-processing part of the dataset, I used data augmentation to combat overfitting. 
@@ -38,7 +38,8 @@ do not introduce distortion to objects like buildings.
   - By training the autoencoder, we have its encoder part learned to compress each image into ten floating point values.
   - I am going to use K-Means to generate the cluster centroids, which are the 100 clusters’ centers in the 100-D feature space.
   - We are also going to build our custom clustering layer to convert input features to cluster label probability. The probability is calculated by t-distribution.
-  ![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
+    
+![img/deepcluster-pipeline.gif](img/deepcluster-pipeline.gif)
 </details>
 <details>
   <summary>
@@ -66,7 +67,7 @@ do not introduce distortion to objects like buildings.
   #
   - The deep clustering model has soft labeling, assigning an estimated class to each of the data samples in such a way that can be redefined iteratively.
   - The prepared deep clustering model is compiled with a stochastic gradient descent optimizer with 0.01 learning rate using with Kullback-Leibler loss function.
-  - Model is training as iteratively that refines the clusters by learning from the high-confidence assignments with the help of the auxiliary target distribution.
+  - Model is training iteratively that refines the clusters by learning from the high-confidence assignments with the help of the auxiliary target distribution.
   - The deep clustering model is trained by matching the soft assignment to the target distribution.
   - The target distribution is redefined one time in every 100 epochs.
   - The Kullback-Leibler loss calculates divergence loss between soft assignments and auxiliary distribution.
@@ -84,7 +85,6 @@ do not introduce distortion to objects like buildings.
   - After 5 epochs, the calculated accuracy is about 0.92.
   - Loss function for the training is basically just a binary cross-entropy.
 </details>
----
 
 ## How to use
 
@@ -98,17 +98,13 @@ This tutorial depends on the following libraries:
 
 Also, this code should be compatible with Python versions Python 3.8–3.11.
 
-### Run main.py
-
-You will see the predicted results of test image in data/membrane/test
-
-### Or follow notebook Deep-clustering_pytorch.ipynb, DeepClustering_ResNet50.ipynb, U-Net-semantic-segmentation.ipynb
+### For training, you can refer to the notebooks: Deep-clustering_pytorch.ipynb, DeepClustering_ResNet50.ipynb, and U-Net-semantic-segmentation.ipynb
 
 ### Results
 
 #### Deep Clustering results
-![img/dc_output_1.png](img/dc_output_1.png)
-![img/dc_output_2.png](img/dc_output_2.png)
+ <img src="img/dc_output_1.png" alt="Image" style="width: 600px; height: auto;">
+ <img src="img/dc_output_2.png" alt="Image" style="width: 600px; height: auto;">
 
 #### Semantic Segmentation results
 ![img/output.png](img/output.png)
